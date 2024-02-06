@@ -1,0 +1,6 @@
+@SWAPP_HostAddress = http://localhost:5185
+
+GET {{SWAPP_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
