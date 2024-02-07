@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SWAPP")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+450e61c6e95318a85c7d68dc4f0c855013625f7a")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+54d92da77ca635f0115f0656d610b61b96ce41f2")]
 [assembly: System.Reflection.AssemblyProductAttribute("SWAPP")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SWAPP")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
