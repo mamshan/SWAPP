@@ -15,6 +15,9 @@ namespace SWAPP.Entities
         [StringLength(255)]
         public string? c_name { get; set; }= string.Empty;
 
+        public DateOnly? sdate { get; set; }
+
+
         [StringLength(255)]
         public string? contno { get; set; }= string.Empty;
 

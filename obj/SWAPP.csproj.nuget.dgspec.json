@@ -1,27 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\HP\\Documents\\Projects\\SWAPP\\SWAPP.csproj": {}
+    "C:\\Users\\Administrator\\Desktop\\SWAPP\\SWAPP.csproj": {}
   },
   "projects": {
-    "C:\\Users\\HP\\Documents\\Projects\\SWAPP\\SWAPP.csproj": {
+    "C:\\Users\\Administrator\\Desktop\\SWAPP\\SWAPP.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\HP\\Documents\\Projects\\SWAPP\\SWAPP.csproj",
+        "projectUniqueName": "C:\\Users\\Administrator\\Desktop\\SWAPP\\SWAPP.csproj",
         "projectName": "SWAPP",
-        "projectPath": "C:\\Users\\HP\\Documents\\Projects\\SWAPP\\SWAPP.csproj",
-        "packagesPath": "C:\\Users\\HP\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\HP\\Documents\\Projects\\SWAPP\\obj\\",
+        "projectPath": "C:\\Users\\Administrator\\Desktop\\SWAPP\\SWAPP.csproj",
+        "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Administrator\\Desktop\\SWAPP\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\HP\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\Administrator\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {

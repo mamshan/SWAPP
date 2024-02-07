@@ -9,25 +9,26 @@ namespace SWAPP.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class TestController : ControllerBase
+    public class AppointmentController : ControllerBase
     {
        
-        private readonly DataContext _context;
+       private readonly DataContext _context;
 
-        public TestController(DataContext context) {
+        public AppointmentController(DataContext context) {
             _context = context;
         }
 
-                [HttpGet]
+        [HttpGet]
         [Route("detail")]
         public async Task<ActionResult<Appointment>> GetDetailList(string? dt)
         {       
 
-              DateTime date = DateTime.Parse(dt);  
-              DateTime dtfrom = date.AddDays(-30);
-              DateTime dtto = date.AddDays(30);
+              DateOnly date = DateOnly.Parse(dt);  
+              DateOnly dtfrom = date.AddDays(-30);
+              DateOnly dtto = date.AddDays(30);
 
               var ressales = await  _context.tb_appoinments
+              .Where(r => r.sdate >= dtfrom && r.sdate <= dtto)
                 .Where(r => r.aptype == "DETAIL")
                 .OrderBy(r => r.id)
                 .ToListAsync();
@@ -40,9 +41,10 @@ namespace SWAPP.Controllers
         public async Task<ActionResult<Appointment>> GetDetailDayList(string? dt)
         {       
 
-              DateTime date = DateTime.Parse(dt);  
+              DateOnly date = DateOnly.Parse(dt);  
               
               var ressales = await  _context.tb_appoinments
+               .Where(r => r.sdate == date)
                 .Where(r => r.aptype == "DETAIL")
                 .OrderBy(r => r.id)
                 .ToListAsync();
@@ -56,11 +58,12 @@ namespace SWAPP.Controllers
         public async Task<ActionResult<Appointment>> GetTyreList(string? dt)
         {       
 
-              DateTime date = DateTime.Parse(dt);  
-              DateTime dtfrom = date.AddDays(-30);
-              DateTime dtto = date.AddDays(30);
+              DateOnly date = DateOnly.Parse(dt);  
+              DateOnly dtfrom = date.AddDays(-30);
+              DateOnly dtto = date.AddDays(30);
 
               var ressales = await  _context.tb_appoinments
+                .Where(r => r.sdate >= dtfrom && r.sdate <= dtto)
                 .Where(r => r.aptype == "TYRE")
                 .OrderBy(r => r.id)
                 .ToListAsync();
@@ -73,9 +76,10 @@ namespace SWAPP.Controllers
         public async Task<ActionResult<Appointment>> GetTyreDayList(string? dt)
         {       
 
-              DateTime date = DateTime.Parse(dt);  
+              DateOnly date = DateOnly.Parse(dt);  
               
               var ressales = await  _context.tb_appoinments
+                .Where(r => r.sdate == date)
                 .Where(r => r.aptype == "TYRE")
                 .OrderBy(r => r.id)
                 .ToListAsync();
@@ -84,20 +88,29 @@ namespace SWAPP.Controllers
         }
 
 
-
-
         [HttpPost]
-        public async Task<ActionResult<Appointment>> GetDetailList1(Appointment dt)
+        public async Task<ActionResult<Appointment>> GetDetailList1(Appointment appointment)
         {   
-           
-           Console.WriteLine(dt);
-
-              _context.tb_appoinments.Add(dt);
+            
+         
+              _context.tb_appoinments.Add(appointment);
             await _context.SaveChangesAsync();
+          
+            return Ok("Saved");
+        }
 
-            return Ok(await _context.tb_appoinments.ToListAsync());
+        [HttpPut]
+        public  async Task<ActionResult<List<Appointment>>> UpdateHero(Appointment appointment)
+        {
+            var dbHero = await _context.tb_appoinments.FindAsync(appointment.id);
+            if (dbHero is null)
+                return NotFound("Not Found");
 
+            _context.Entry(dbHero).CurrentValues.SetValues(appointment);
 
+            await _context.SaveChangesAsync();
+            
+            return Ok("Updated");
         }
 
 
