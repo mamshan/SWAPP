@@ -6,10 +6,9 @@ namespace SWAPP.Data
 {
     public class DataContext : DbContext
     {
-        public DataContext()
-        {
-        }
-
+        public DataContext(DbContextOptions<DataContext> options)
+    : base(options)
+{ }
         
         public DbSet<Sale> S_SALMA { get; set; }
         public DbSet<Customer> Vendor { get; set; }
@@ -17,6 +16,9 @@ namespace SWAPP.Data
         public DbSet<Return> C_BAL { get; set; }
 
         public DbSet<Appointment> tb_appoinments { get; set; }
+
+        public DbSet<Appointmentt> tb_appoinments1 { get; set; }
+
 
          
     }

@@ -9,16 +9,16 @@ namespace SWAPP.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class TestController : ControllerBase
+    public class AppointmentController : ControllerBase
     {
        
-        private readonly DataContext _context;
+       private readonly DataContext _context;
 
-        public TestController(DataContext context) {
+        public AppointmentController(DataContext context) {
             _context = context;
         }
 
-                [HttpGet]
+        [HttpGet]
         [Route("detail")]
         public async Task<ActionResult<Appointment>> GetDetailList(string? dt)
         {       
@@ -84,20 +84,28 @@ namespace SWAPP.Controllers
         }
 
 
-
-
         [HttpPost]
-        public async Task<ActionResult<Appointment>> GetDetailList1(Appointment dt)
+        public async Task<ActionResult<Appointmentt>> GetDetailList1(Appointmentt appointment)
         {   
+            
+           Console.WriteLine(appointment);
            
-           Console.WriteLine(dt);
+          
+            return Ok( _context.tb_appoinments.ToListAsync());
+        }
 
-              _context.tb_appoinments.Add(dt);
+        [HttpPut]
+        public  async Task<ActionResult<List<Appointment>>> UpdateHero(Appointment appointment)
+        {
+            var dbHero = await _context.tb_appoinments.FindAsync(appointment.id);
+            if (dbHero is null)
+                return NotFound("Not Found");
+
+            _context.Entry(dbHero).CurrentValues.SetValues(appointment);
+
             await _context.SaveChangesAsync();
-
+            
             return Ok(await _context.tb_appoinments.ToListAsync());
-
-
         }
 
 
