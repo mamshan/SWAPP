@@ -94,9 +94,16 @@ namespace SWAPP.Controllers
             
          
               _context.tb_appoinments.Add(appointment);
-            await _context.SaveChangesAsync();
+            int id = await _context.SaveChangesAsync();
           
-            return Ok("Saved");
+
+            var Data = new
+            {
+                id = appointment.id, 
+            };
+
+            return Ok(Data);
+ 
         }
 
         [HttpPut]
@@ -110,7 +117,12 @@ namespace SWAPP.Controllers
 
             await _context.SaveChangesAsync();
             
-            return Ok("Updated");
+            var Data = new
+            {
+                id = appointment.id, 
+            };
+
+            return Ok(Data);
         }
 
 

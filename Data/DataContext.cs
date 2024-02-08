@@ -17,8 +17,9 @@ namespace SWAPP.Data
 
         public DbSet<Appointment> tb_appoinments { get; set; }
 
-        public DbSet<Appointmentt> tb_appoinments1 { get; set; }
+        public DbSet<Item> s_mas { get; set; }
 
+              
 
          
     }

@@ -9,8 +9,7 @@ namespace SWAPP.Entities
         [Key]
         public int id { get; set; } // Added primary key
 
-        [StringLength(255)]
-        public string? slot { get; set; } = string.Empty;
+        public int? slot { get; set; } = 0;
 
         [StringLength(255)]
         public string? c_name { get; set; }= string.Empty;
