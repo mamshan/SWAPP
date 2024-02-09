@@ -17,11 +17,17 @@ namespace SWAPP.Data
 
         public DbSet<Appointment> tb_appoinments { get; set; }
 
+
+
+
         public DbSet<Item> s_mas { get; set; }
 
               
-
+ public DbSet<Commision> s_comm { get; set; }
+          public DbSet<SpDiscount> sp_discount_trn  { get; set; }
          
+
+ 
     }
 
    

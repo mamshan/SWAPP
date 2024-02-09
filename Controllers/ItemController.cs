@@ -21,17 +21,15 @@ namespace SWAPP.Controllers
 
         [HttpGet]
         [Route("list")]
-        public async Task<ActionResult<Appointment>> GetDetailList(string size)
+        public async Task<ActionResult<Appointment>> GetDetailList(string? size)
         {
             //var sql = "SELECT * FROM YourEntities WHERE Name = {0}";
-            var sql = "SELECT id, stk_no, part_no, substitute, brand_name FROM s_mas WHERE ((PART_NO LIKE '%" + size + "%') OR (REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(PART_NO,'Z',''),'R',''),'-',''),'/',''),'F',''),'X',''),' ','') LIKE '%" + size + "%')) AND (company = 'B' OR company = 'I') ORDER BY spromot";
+            var sql = "select id, stk_no, part_no, substitute, brand_name FROM s_mas WHERE ((PART_NO LIKE '%" + size + "%') OR (REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(PART_NO,'Z',''),'R',''),'-',''),'/',''),'F',''),'X',''),' ','') LIKE '%" + size + "%')) AND (company = 'B' OR company = 'I') ORDER BY spromot,  selling desc";
            // sql = "select * from s_mas";
 
             var parameter = $"%{size}%";
             var result = await _context.s_mas.FromSqlRaw(sql).ToListAsync();
-            var data = new {
-                sql = sql
-            };
+           
             return Ok(result);
         }
 

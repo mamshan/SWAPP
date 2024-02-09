@@ -23,12 +23,14 @@ builder.Services.AddCors(options =>
                       policy  =>
                       {
                           policy.WithOrigins("http://localhost:4200",
-                                              "http://192.168.1.4:82")
+                                              "http://192.168.1.4:82",
+                                              "http://192.168.1.4:81")
                                               .AllowAnyHeader()
                                               .AllowAnyMethod();
                       });
 });
 
+ 
 
 var app = builder.Build();
 
@@ -41,7 +43,6 @@ if (app.Environment.IsDevelopment())
 
 
 
-app.UseHttpsRedirection();
 app.UseCors(MyAllowSpecificOrigins);
 
 app.UseAuthorization();
