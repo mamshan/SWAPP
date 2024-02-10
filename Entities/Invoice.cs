@@ -10,7 +10,7 @@ namespace SWAPP.Entities
 
 public required string cus_name { get; set; }
 
-        public DateTime? sdate { get; set; } = null;
+        public DateOnly? sdate { get; set; } = null;
 
         public double  grand_tot { get; set; } = 0;
         
@@ -30,11 +30,16 @@ public required string cus_name { get; set; }
     public string stk_no { get; set; } // Foreign key to Sale.RefNo
 
     public double dis1 { get; set; } // Foreign key to Sale.RefNo
+
+    public double dis2 { get; set; } // Foreign key to Sale.RefNo
+
+    public double sptot { get; set; } // Foreign key to Sale.RefNo
+
     public string reason { get; set; } // Foreign key to Sale.RefNo
 
     // Add other discount-related properties as needed
-public int inv_id { get; set; }
-    
+public int? inv_id { get; set; }
+    public string ref_no { get; set; }
 }
 
     public class Return {

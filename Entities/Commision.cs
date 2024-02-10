@@ -7,7 +7,7 @@ namespace SWAPP.Entities
 
         public required string invno { get; set; }
 
-        public DateTime? sdate { get; set; } = null;
+        public DateOnly? sdate { get; set; } = null;
 
         public double  amount { get; set; } = 0;
         public  string? descr { get; set; }
