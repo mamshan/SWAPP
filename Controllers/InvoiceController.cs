@@ -23,10 +23,12 @@ namespace SWAPP.Controllers
         [Route("list")]
         public async Task<ActionResult<Appointment>> GetDetailList(string? invno)
         {
+            var comp = Request.Headers["x-auth-company"].ToString();
 
             var parameter = "%" + invno + "%";
             var ressales = await  _context.S_SALMA 
-            .Where(r => EF.Functions.Like( r.ref_no, parameter)) 
+            .Where(r => EF.Functions.Like( r.ref_no, parameter))
+            .Where(r => r.company == comp) 
             .OrderByDescending(r => r.id)
             .Take(20)
             .ToListAsync();

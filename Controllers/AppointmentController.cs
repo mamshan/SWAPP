@@ -20,7 +20,7 @@ namespace SWAPP.Controllers
 
         [HttpGet]
         [Route("detail")]
-        public async Task<ActionResult<Appointment>> GetDetailList(string? dt)
+        public async Task<ActionResult<Appointment>> GetDetailList(string dt)
         {       
 
               DateOnly date = DateOnly.Parse(dt);  
@@ -38,7 +38,7 @@ namespace SWAPP.Controllers
 
         [HttpGet]
         [Route("detail/day")]
-        public async Task<ActionResult<Appointment>> GetDetailDayList(string? dt)
+        public async Task<ActionResult<Appointment>> GetDetailDayList(string dt)
         {       
 
               DateOnly date = DateOnly.Parse(dt);  
@@ -55,7 +55,7 @@ namespace SWAPP.Controllers
 
         [HttpGet]
         [Route("tyre")]
-        public async Task<ActionResult<Appointment>> GetTyreList(string? dt)
+        public async Task<ActionResult<Appointment>> GetTyreList(string dt)
         {       
 
               DateOnly date = DateOnly.Parse(dt);  
@@ -73,7 +73,7 @@ namespace SWAPP.Controllers
 
         [HttpGet]
         [Route("tyre/day")]
-        public async Task<ActionResult<Appointment>> GetTyreDayList(string? dt)
+        public async Task<ActionResult<Appointment>> GetTyreDayList(string dt)
         {       
 
               DateOnly date = DateOnly.Parse(dt);  

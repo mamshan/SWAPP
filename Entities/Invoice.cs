@@ -16,7 +16,8 @@ public required string cus_name { get; set; }
         
         public double  gst { get; set; } = 0;
 
-       
+       public string  company { get; set; } = string.Empty;
+
        
     }
 
