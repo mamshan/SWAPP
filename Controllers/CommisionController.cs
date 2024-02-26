@@ -160,7 +160,7 @@ namespace SWAPP.Controllers
  
             combinedData.amount = invoice.comAmt;
             combinedData.mtype = "TRADE";
-            combinedData.company = "I";
+            combinedData.company = comp;
            
             _context.s_comm.Add(combinedData);
             int id = await _context.SaveChangesAsync();
@@ -181,7 +181,7 @@ namespace SWAPP.Controllers
         }
 
      
-        public async Task<string> GetNoAsync(string comcode) {
+        private async Task<string> GetNoAsync(string comcode) {
 
 
             try

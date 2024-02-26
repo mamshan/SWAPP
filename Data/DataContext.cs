@@ -26,9 +26,50 @@ namespace SWAPP.Data
  public DbSet<Commision> s_comm { get; set; }
           public DbSet<SpDiscount> sp_discount_trn  { get; set; }
          
+        public DbSet<DepositMaster> dep_cheq_mas  { get; set; }
+        public DbSet<DepositTran> dep_cheq_trn  { get; set; }
 
- 
+        public DbSet<Settlment> s_crec  { get; set; }
+        public DbSet<SettlmentTran> s_sttr  { get; set; }
+
+        public DbSet<Company> company  { get; set; }
+
+
+         protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<DepositMaster>()
+            .HasMany(o => o.DepositTrans)
+            .WithOne(oi => oi.DepositMaster)
+            .HasForeignKey(oi => oi.depositid);
+     
+        modelBuilder.Entity<Settlment>()
+            .HasMany(o => o.SettlmentTrans)
+            .WithOne(oi => oi.Settlment)
+            .HasForeignKey(oi => oi.settlmentid);
+            
     }
+      
+    
+        
+    }
+
+
+
+     public class GlDataContext : DbContext
+    {
+        public GlDataContext()
+        {
+        }
+
+            protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer(@"Server=192.168.1.57;Database=CENTRAL;User Id=sa;Password=123;TrustServerCertificate=true;");
+        }
+
+         public DbSet<Ledger> ledger  { get; set; }
+
+    }
+
 
    
 }
