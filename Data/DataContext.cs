@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Logging.Console;
 using SWAPP.Entities;
 
@@ -8,8 +9,17 @@ namespace SWAPP.Data
     {
         public DataContext(DbContextOptions<DataContext> options)
     : base(options)
-{ }
-        
+{ this.ChangeTracker.LazyLoadingEnabled = false;  }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        { 
+            //Enabling Lazy Loading
+            optionsBuilder.UseLazyLoadingProxies();
+            optionsBuilder.ConfigureWarnings(warnings =>
+            warnings.Default(WarningBehavior.Ignore)
+                .Log( CoreEventId.NavigationBaseIncludeIgnored)
+                );
+            
+        }
         public DbSet<Sale> S_SALMA { get; set; }
         public DbSet<Customer> Vendor { get; set; }
 
@@ -26,11 +36,11 @@ namespace SWAPP.Data
  public DbSet<Commision> s_comm { get; set; }
           public DbSet<SpDiscount> sp_discount_trn  { get; set; }
          
-        public DbSet<DepositMaster> dep_cheq_mas  { get; set; }
-        public DbSet<DepositTran> dep_cheq_trn  { get; set; }
+        public virtual DbSet<DepositMaster> dep_cheq_mas  { get; set; }
+        public virtual DbSet<DepositTran> dep_cheq_trn  { get; set; }
 
-        public DbSet<Settlment> s_crec  { get; set; }
-        public DbSet<SettlmentTran> s_sttr  { get; set; }
+        public virtual DbSet<Settlment> s_crec  { get; set; }
+        public virtual DbSet<SettlmentTran> s_sttr  { get; set; }
 
         public DbSet<Company> company  { get; set; }
 
@@ -63,9 +73,10 @@ namespace SWAPP.Data
 
             protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=192.168.1.57;Database=CENTRAL;User Id=sa;Password=123;TrustServerCertificate=true;");
+            optionsBuilder.UseSqlServer(@"Server=192.168.1.57;Database=CENTRAL;User Id=sa;Password=123;TrustServerCertificate=true;")
+            .ConfigureWarnings(warnings => warnings.Ignore(CoreEventId.NavigationBaseIncludeIgnored, CoreEventId.NavigationBaseIncluded));
         }
-
+ 
          public DbSet<Ledger> ledger  { get; set; }
 
     }

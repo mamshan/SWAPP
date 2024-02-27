@@ -7,6 +7,7 @@ using Microsoft.IdentityModel.Tokens;
 using Mysqlx;
 using SWAPP.Data;
 using SWAPP.Entities;
+using ZstdSharp.Unsafe;
 
 namespace SWAPP.Controllers
 {
@@ -23,17 +24,36 @@ namespace SWAPP.Controllers
 
         [HttpGet]
         [Route("card/list")]
-        public async Task<ActionResult<Appointment>> GetDetailList(string? size)
+        public async Task<ActionResult<Appointment>> GetDetailList(string? refsearch)
         {
 
-            var ressales = await  _context.dep_cheq_mas
-             .Include(o => o.DepositTrans)
-             .Where(r=> r.flag =="C/Card")
+         _context.ChangeTracker.LazyLoadingEnabled = false;
+
+         if (refsearch.IsNullOrEmpty()) {
+
+            var ressales = await _context.dep_cheq_mas
+              .Include(c => c.DepositTrans)
+            .Where(r=> r.flag =="C/Card")
+            .OrderByDescending(r => r.id)
+            .Take(50)
+            .ToListAsync();  
+          
+             return Ok(ressales);  
+
+         } else {
+
+           var ressales = await _context.dep_cheq_mas
+            .Include(c => c.DepositTrans)
+            .ThenInclude(r=> r.DepositMaster)
+            .Where(r=> r.flag =="C/Card")
+            .Where(r=>r.DepositTrans.Any(c => c.pdno.Contains(refsearch)) || r.DepositTrans.Any(c => c.refno.Contains(refsearch)) || r.DepositTrans.Any(c => c.st_date.Equals(refsearch))  || r.DepositTrans.Any(c => c.amount.Equals(refsearch)))
             .OrderByDescending(r => r.id )
             .Take(50)
-            .ToListAsync();
-
+            .ToListAsync();     
+             
             return Ok(ressales); 
+         }
+           
         }
 
 
@@ -52,12 +72,12 @@ namespace SWAPP.Controllers
             sqlcomb += " from (";
             sqlcomb += "  select 0 as selected, s_sttr.id,s_sttr.st_invono as invno, s_sttr.company, s_sttr.settled_no, s_sttr.settlmentid, s_sttr.st_chno, s_sttr.st_refno as pdno, s_salma.ord_no, s_sttr.st_date, s_sttr.st_paid as amount,s_salma.dele_no";
             sqlcomb += "  from s_sttr inner join s_salma on s_salma.ref_no = s_sttr.st_invono";
-            sqlcomb += "  where (s_sttr.settled_no is null) and (s_sttr.st_chno = 'c/card') and (s_sttr.company = '" + comp + "')";
+            sqlcomb += "  where (s_sttr.settled_no is null) and (s_sttr.st_chno = 'c/card' or s_sttr.st_chno ='C/C Card') and (s_sttr.company = '" + comp + "')";
             sqlcomb += "  union all ";
             sqlcomb += "  select 0 as selected, s_ut.id,s_salma_1.ref_no as invno, s_ut.company, s_ut.d as settled_no, s_ut.id as settlmentid, s_salma_1.type as st_chno, s_ut.c_refno as pdno, s_salma_1.ord_no, s_ut.c_date as st_date, ";
             sqlcomb += "         s_ut.c_payment * - 1 as amount , s_salma_1.dele_no ";
             sqlcomb += "  from s_ut inner join s_crnma on s_ut.cre_no_no = s_crnma.ref_no inner join s_salma as s_salma_1 on s_crnma.invoiceno = s_salma_1.ref_no";
-            sqlcomb += "  where (s_salma_1.type = 'cc') and (s_ut.company = '" + comp + "') and (s_ut.type = 'cas') and (s_ut.lid = '1')";
+            sqlcomb += "  where (s_salma_1.type = 'cc' or s_salma_1.type = 'ce') and (s_ut.company = '" + comp + "') and (s_ut.type = 'cas') and (s_ut.lid = '1')";
             sqlcomb += ") as combined"; 
             sqlcomb += " order by invno,st_date"; 
             var ressalesc = await  _context.Database.SqlQueryRaw<CardTran>(sqlcomb).ToListAsync();

@@ -22,7 +22,7 @@ public class DepositMaster
 public string? dele_no { get; set; }
 
 
-    public List<DepositTran> DepositTrans { get;set; }  
+    public virtual ICollection<DepositTran> DepositTrans { get;set; }  = new List<DepositTran>();
 }
 
 // Dependent (child)
@@ -40,7 +40,7 @@ public string? department { get; set; }
      public DateOnly? st_date { get; set; } // Required foreign key property
     public string? dele_no { get; set; } // Required foreign key property
 
-    public DepositMaster DepositMaster { get; set; } = null; // Required reference navigation to principal
+    public virtual DepositMaster DepositMaster { get; set; } = null; // Required reference navigation to principal
 }
 
 
@@ -56,7 +56,7 @@ public class Settlment
  
     public string company { get; set; } 
 
-    public List<SettlmentTran> SettlmentTrans { get;set; }  
+    public virtual List<SettlmentTran> SettlmentTrans { get;set; }  
 }
 
 // Dependent (child)
@@ -76,7 +76,7 @@ public class SettlmentTran
  public  string? company { get; set; }
 
     public int? settlmentid { get; set; } // Required foreign key property
-    public Settlment Settlment { get; set; } = null; // Required reference navigation to principal
+    public virtual Settlment Settlment { get; set; } = null; // Required reference navigation to principal
 }
 
 

@@ -92,7 +92,16 @@ namespace SWAPP.Controllers
         public async Task<ActionResult<Appointment>> GetDetailList1(Appointment appointment)
         {   
             
-         
+            var dbHero = await _context.tb_appoinments
+             .Where(r => r.sdate == appointment.sdate)
+             .Where(r => r.aptype == appointment.aptype)
+             .Where(r => r.slot == appointment.slot)
+             .FirstOrDefaultAsync();
+
+            if (dbHero is not null)
+                return NotFound("Found");
+
+
               _context.tb_appoinments.Add(appointment);
             int id = await _context.SaveChangesAsync();
           
